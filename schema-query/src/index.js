@@ -26,6 +26,7 @@ const typeDefs = gql`
     hora: Date
     usuarioLogado: Usuario
     produtoEmDestaque: Produto
+    numerosMegaSena: [Int!]!
   }
 `;
 
@@ -42,7 +43,7 @@ const resolvers = {
         return parseFloat(descontoTotal).toFixed(2);
       }
 
-      return 0
+      return produto.preco;
     }
   },
   Query: {
@@ -64,10 +65,19 @@ const resolvers = {
     },
     produtoEmDestaque() {
       return {
-        nome: "Notbook",
+        nome: "Notebook",
         preco: 4899.99,
-        desconto: 0.20
+        desconto: 0
       };
+    },
+    numerosMegaSena() {
+      const crescente = (a, b) => a - b;
+      const removeDuplicados = (a, b) => a != b;
+
+      return Array(6)
+        .fill(0)
+        .map(n => parseInt(Math.random() * 60 + 1))
+        .sort(crescente);
     }
   }
 };
