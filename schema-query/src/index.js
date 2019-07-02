@@ -1,4 +1,5 @@
 const { ApolloServer, gql } = require("apollo-server");
+const { importSchema } = require("graphql-import");
 
 const usuarios = [
   {
@@ -26,38 +27,6 @@ const usuarios = [
     vip: false
   }
 ];
-
-const typeDefs = gql`
-  #! pontos de entranda da sua api!
-
-  scalar Date
-
-  type Usuario {
-    id: ID!
-    nome: String!
-    email: String!
-    idade: Int
-    salario: Float
-    vip: Boolean
-  }
-
-  type Produto {
-    nome: String!
-    preco: Float!
-    desconto: Float
-    precoComDesconto: Float
-  }
-
-  type Query {
-    ola: String
-    hora: Date
-    usuarioLogado: Usuario
-    produtoEmDestaque: Produto
-    numerosMegaSena: [Int!]!
-    usuarios: [Usuario!]!
-    usuario(id: ID!): Usuario
-  }
-`;
 
 const resolvers = {
   Usuario: {
@@ -102,7 +71,6 @@ const resolvers = {
     numerosMegaSena() {
       const crescente = (a, b) => a - b;
       //   const removeDuplicados = (a, b) => a != b;
-
       return Array(6)
         .fill(0)
         .map(n => parseInt(Math.random() * 60 + 1))
@@ -121,7 +89,7 @@ const resolvers = {
 };
 
 const server = new ApolloServer({
-  typeDefs,
+  typeDefs: importSchema('./schema/index.graphql'),
   resolvers
 });
 

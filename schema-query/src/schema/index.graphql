@@ -1,0 +1,6 @@
+#! pontos de entranda da sua api!
+# import Usuario from 'usuario.graphql'
+# import Produto from 'produto.graphql'
+# import Query from 'query.graphql'
+
+scalar Date
