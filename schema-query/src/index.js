@@ -55,6 +55,7 @@ const typeDefs = gql`
     produtoEmDestaque: Produto
     numerosMegaSena: [Int!]!
     usuarios: [Usuario!]!
+    usuario(id: ID!): Usuario
   }
 `;
 
@@ -100,7 +101,7 @@ const resolvers = {
     },
     numerosMegaSena() {
       const crescente = (a, b) => a - b;
-      const removeDuplicados = (a, b) => a != b;
+      //   const removeDuplicados = (a, b) => a != b;
 
       return Array(6)
         .fill(0)
@@ -109,6 +110,12 @@ const resolvers = {
     },
     usuarios() {
       return usuarios;
+    },
+    usuario(_, args) {
+      console.log(_);
+      return usuarios.find(usuario => {
+        return usuario.id == args.id;
+      });
     }
   }
 };
